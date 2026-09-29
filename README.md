@@ -30,7 +30,9 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img width="400" height="225" alt="FlixsterPlus" src="https://github.com/user-attachments/assets/88676f9c-9f0a-410a-8857-b348867b4940" />
+<img width="800" height="450" alt="FlixsterPlus-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/eb1bf96d-11e8-4c1e-9c73-2477327c40de" />
+
+
 
 
 <!-- Replace this with whatever GIF tool you used! -->
