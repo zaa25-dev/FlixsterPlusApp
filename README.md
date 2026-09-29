@@ -30,7 +30,8 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img width="400" height="225" alt="FlixsterPlus" src="https://github.com/user-attachments/assets/88676f9c-9f0a-410a-8857-b348867b4940" />
+
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ...  
