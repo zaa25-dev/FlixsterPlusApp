@@ -3,32 +3,23 @@ package com.codepath.nationalparks
 import com.google.gson.annotations.SerializedName
 
 /**
- * The Model for storing a single park from the National Parks API.
- *
- * SerializedName tags MUST match the JSON response for the
- * object to correctly parse with the gson library.
+ * Mapped to TMDb movie JSON response keys while keeping
+ * existing NationalPark field names intact.
  */
 class NationalPark {
     @JvmField
-    @SerializedName("fullName")
+    @SerializedName("title") // Mapped from TMDb "title"
     var name: String? = null
 
     @JvmField
-    @SerializedName("description")
+    @SerializedName("overview") // Mapped from TMDb "overview"
     var description: String? = null
 
     @JvmField
-    @SerializedName("states")
-    var location: String? = null
+    @SerializedName("poster_path")
+    var posterPath: String? = null
 
-    @SerializedName("images")
-    var images: List<Image>? = null
-
-    // Convenience property to access the first image’s URL
-    val imageUrl: String? get() = images?.firstOrNull()?.url
-
-    class Image {
-        @SerializedName("url")
-        var url: String? = null
-    }
+    // Construct full poster URL using TMDb base path
+    val imageUrl: String?
+        get() = if (posterPath != null) "https://image.tmdb.org/t/p/w500/$posterPath" else null
 }

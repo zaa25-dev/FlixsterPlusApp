@@ -22,7 +22,7 @@ import org.json.JSONArray
 // --------------------------------//
 // CHANGE THIS TO BE YOUR API KEY  //
 // --------------------------------//
-private const val API_KEY = "8cWEGm79SNbUULOC9Wr719rBs8St1Ed33ioDyuHV"
+private const val API_KEY = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
 
 /*
  * The class for the only fragment in the app, which contains the progress bar,
@@ -30,23 +30,23 @@ private const val API_KEY = "8cWEGm79SNbUULOC9Wr719rBs8St1Ed33ioDyuHV"
 
  */
 class NationalParksFragment : Fragment(), OnListFragmentInteractionListener {
-        /*
-     * Constructing the view
-     */
-        override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            val view = inflater.inflate(R.layout.fragment_national_parks_list, container, false)
-            val progressBar = view.findViewById<View>(R.id.progress) as ContentLoadingProgressBar
-            val recyclerView = view.findViewById<View>(R.id.list) as RecyclerView
-            val context = view.context
+    /*
+ * Constructing the view
+ */
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_national_parks_list, container, false)
+        val progressBar = view.findViewById<View>(R.id.progress) as ContentLoadingProgressBar
+        val recyclerView = view.findViewById<View>(R.id.list) as RecyclerView
+        val context = view.context
 
-            recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
-            updateAdapter(progressBar, recyclerView)
-            return view
-        }
+        updateAdapter(progressBar, recyclerView)
+        return view
+    }
 
     /*
      * Updates the RecyclerView adapter with new data.  This is where the
@@ -62,59 +62,59 @@ class NationalParksFragment : Fragment(), OnListFragmentInteractionListener {
 
         // Using the client, perform the HTTP request
         client[
-            "https://developer.nps.gov/api/v1/parks",
+            "https://api.themoviedb.org/3/movie/now_playing",
             params,
             object : JsonHttpResponseHandler()
             {
-            /*
-             * The onSuccess function gets called when
-             * HTTP response status is "200 OK"
-             */
-            override fun onSuccess(
-                statusCode: Int,
-                headers: Headers,
-                json: JSON
-            ) {
-                // The wait for a response is over
-                progressBar.hide()
+                /*
+                 * The onSuccess function gets called when
+                 * HTTP response status is "200 OK"
+                 */
+                override fun onSuccess(
+                    statusCode: Int,
+                    headers: Headers,
+                    json: JSON
+                ) {
+                    // The wait for a response is over
+                    progressBar.hide()
 
-                val dataJSON = json.jsonObject.get("data") as JSONArray
-                val parksRawJSON = dataJSON.toString()
+                    val dataJSON = json.jsonObject.get("results") as JSONArray
+                    val parksRawJSON = dataJSON.toString()
 
-                // Create a Gson instance to help parse the raw JSON
-                val gson = Gson()
+                    // Create a Gson instance to help parse the raw JSON
+                    val gson = Gson()
 
-                // Tell Gson what type we’re expecting (a list of NationalPark objects)
-                val arrayParkType = object : TypeToken<List<NationalPark>>() {}.type
+                    // Tell Gson what type we’re expecting (a list of NationalPark objects)
+                    val arrayParkType = object : TypeToken<List<NationalPark>>() {}.type
 
-                // Convert the raw JSON string into a list of actual NationalPark data models
-                val models: List<NationalPark> = gson.fromJson(parksRawJSON, arrayParkType)
+                    // Convert the raw JSON string into a list of actual NationalPark data models
+                    val models: List<NationalPark> = gson.fromJson(parksRawJSON, arrayParkType)
 
-                recyclerView.adapter = NationalParksRecyclerViewAdapter(models, this@NationalParksFragment)
+                    recyclerView.adapter = NationalParksRecyclerViewAdapter(models, this@NationalParksFragment)
 
-                // Look for this in Logcat:
-                Log.d("NationalParksFragment", "response successful")
-            }
-
-            /*
-             * The onFailure function gets called when
-             * HTTP response status is "4XX" (eg. 401, 403, 404)
-             */
-            override fun onFailure(
-                statusCode: Int,
-                headers: Headers?,
-                errorResponse: String,
-                t: Throwable?
-            ) {
-                // The wait for a response is over
-                progressBar.hide()
-
-                // If the error is not null, log it!
-                t?.message?.let {
-                    Log.e("NationalParksFragment", errorResponse)
+                    // Look for this in Logcat:
+                    Log.d("NationalParksFragment", "response successful")
                 }
-            }
-        }]
+
+                /*
+                 * The onFailure function gets called when
+                 * HTTP response status is "4XX" (eg. 401, 403, 404)
+                 */
+                override fun onFailure(
+                    statusCode: Int,
+                    headers: Headers?,
+                    errorResponse: String,
+                    t: Throwable?
+                ) {
+                    // The wait for a response is over
+                    progressBar.hide()
+
+                    // If the error is not null, log it!
+                    t?.message?.let {
+                        Log.e("NationalParksFragment", errorResponse)
+                    }
+                }
+            }]
 
 
     }

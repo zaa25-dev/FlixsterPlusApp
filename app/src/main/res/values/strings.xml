@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">National Parks</string>
+    <string name="app_name">FlixsterPlus</string>
     <string name="description">Description</string>
     <string name="park_name">Park Name</string>
     <string name="park_location">Park Location</string>

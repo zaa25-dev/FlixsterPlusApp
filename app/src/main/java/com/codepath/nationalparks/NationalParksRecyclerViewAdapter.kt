@@ -12,8 +12,6 @@ import com.bumptech.glide.Glide
  * [RecyclerView.Adapter] that can display a [NationalPark] and makes a call to the
  * specified [OnListFragmentInteractionListener].
  */
-
-
 class NationalParksRecyclerViewAdapter(
     private val parks: List<NationalPark>,
     private val mListener: OnListFragmentInteractionListener?
@@ -30,7 +28,6 @@ class NationalParksRecyclerViewAdapter(
     class ParkViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         var mItem: NationalPark? = null
 
-        // TODO: Step 4a - Add references for remaining views from XML
         val mParkName: TextView = mView.findViewById(R.id.park_name)
         val mParkLocation: TextView = mView.findViewById(R.id.park_location)
         val mParkDescription: TextView = mView.findViewById(R.id.park_description)
@@ -44,26 +41,24 @@ class NationalParksRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ParkViewHolder, position: Int) {
         val park = parks[position]
 
-        // TODO: Step 4b - Bind the park data to the views
         holder.mItem = park
         holder.mParkName.text = park.name
         holder.mParkDescription.text = park.description
-        holder.mParkName.text = park.name
-        holder.mParkLocation.text = park.location
-        holder.mParkDescription.text = park.description
 
-        // TODO: Step 4c - Use Glide to load the first image
+        // Hide or leave location empty since TMDb movies don't have a location property
+        holder.mParkLocation.visibility = View.GONE
+
+        // Use Glide to load the movie poster image
         val imageUrl = park.imageUrl
         Glide.with(holder.mView)
             .load(imageUrl)
-            .centerInside()
+            .centerCrop()
             .into(holder.mParkImage)
 
-
-        // Sets up click listener for this park item
+        // Sets up click listener for this item
         holder.mView.setOnClickListener {
-            holder.mItem?.let { park ->
-                mListener?.onItemClick(park)
+            holder.mItem?.let { item ->
+                mListener?.onItemClick(item)
             }
         }
     }
